@@ -18,7 +18,10 @@
   "bin": {
     "yoink": "./Dist/Src/App.js"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "./node_modules/gulp/bin/gulp.js test",
+    "lint": "./node_modules/gulp/bin/gulp.js lint-check"
+  },
   "dependencies": {
     "axios": "0.21.1",
     "lodash": "4.17.21"
