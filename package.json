@@ -12,10 +12,13 @@
     "node": "^16.6",
     "npm": ">= 7.13.0"
   },
-  "scripts": {},
+  "files": [
+    "Dist"
+  ],
   "bin": {
     "yoink": "./Dist/Src/App.js"
   },
+  "scripts": {},
   "dependencies": {
     "axios": "0.21.1",
     "lodash": "4.17.21"
