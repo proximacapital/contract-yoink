@@ -1,0 +1,39 @@
+name: Node.js CI
+
+on: 
+  push:
+    branches:
+      - master
+      - staging
+      - dev
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.13.1, 16.2]
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+          fetch-depth: 0
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: npm ci
+    - name: Lint check
+      run: gulp lint-check      
+    - name: Build
+      run: gulp build
+    - name: Test
+      run: gulp coverage
+    - name: CodeClimate Upload
+      uses: paambaati/codeclimate-action@v2.7.4
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}

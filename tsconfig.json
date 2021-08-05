@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "ESNEXT",
+        "module": "commonjs",
+        "strict": true,
+        "noUnusedLocals": false,
+        "outDir": "./Dist",
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "inlineSourceMap": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "plugins": [
+            { "transform": "typescript-transform-paths" },
+            { "transform": "typescript-transform-paths", "afterDeclarations": true }
+        ],
+        "paths": {
+            "@Root": ["./*"],
+            "@Src": ["Src/*"],
+            "@Test": ["Test/*"]
+        },
+    },
+    "include": ["Src", "Test"],
+    "exclude": []
+}

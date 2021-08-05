@@ -1,0 +1,36 @@
+{
+  "name": "proximacapital-REPO_NAME",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:proximacapital/{REPO_NAME}.git"
+  },
+  "homepage": "https://github.com/proximacapital/{REPO_NAME}/blob/master/README.md",
+  "engines": {
+    "node": "16.2.0",
+    "npm": ">= 7.13.0"
+  },
+  "scripts": {},
+  "dependencies": {
+    "lodash": "4.17.20",
+    "tsconfig-paths": "3.9.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "4.14.167",
+    "@typescript-eslint/eslint-plugin": "4.14.0",
+    "@typescript-eslint/eslint-plugin-tslint": "4.14.0",
+    "@typescript-eslint/parser": "4.1.0",
+    "ava": "3.10.1",
+    "del": "5.1.0",
+    "eslint": "7.18.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-import-newlines": "1.1.2",
+    "eslint-plugin-typescript-sort-keys": "1.6.0",
+    "eslint-plugin-unicorn": "28.0.2",
+    "gulp": "4.0.2",
+    "nyc": "15.1.0",
+    "ttypescript": "1.5.12",
+    "typescript": "4.0.3",
+    "typescript-transform-paths": "3.0.0"
+  }
+}
