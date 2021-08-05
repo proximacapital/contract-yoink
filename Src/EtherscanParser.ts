@@ -1,35 +1,42 @@
 import axios from "axios";
 
-const networks = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli"]; // eslint-disable-line
+export const NETWORKS = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli", "bsc"]; // eslint-disable-line
 
-type TNetwork = typeof networks[number];
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
+export type TNetwork = typeof NETWORKS[number];
 export type TEtherscanCodeResult = { code: string; filename: string };
 
 // @source: Yoinked from https://github.com/naddison36/sol2uml
 export class EtherscanParser
 {
+    private readonly mAPIKey: string;
     private readonly mURL: string;
 
-    public constructor(
-        protected apikey: string = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1",
-        public network: TNetwork = "mainnet",
-    )
+    public constructor(aNetwork: TNetwork = "mainnet")
     {
-        if (!networks.includes(network))
+        if (!NETWORKS.includes(aNetwork))
         {
             throw new Error(
-                `Invalid network "${network}". Must be one of ${networks}`,
+                `Invalid aNetowrk "${aNetwork}". Must be one of ${NETWORKS}`,
             );
         }
-        else if (network === "mainnet")
+
+        if (aNetwork === "mainnet")
         {
             this.mURL = "https://api.etherscan.io/api";
         }
+        else if (aNetwork === "bsc")
+        {
+            this.mURL = "https://api.bscscan.com/api"
+        }
         else
         {
-            this.mURL = `https://api-${network}.etherscan.io/api`;
+            this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
+
+        this.mAPIKey = aNetwork === "bsc"
+            ? "VDAE16Y6TB5FJHIIP9BJBC8C2ZG1Y6CKA2"  // Personal key, don't spam it thanks
+            : "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate
     }
 
     /**
@@ -49,7 +56,7 @@ export class EtherscanParser
                         module: "contract",
                         action: "getsourcecode",
                         address: aContractAddress,
-                        apikey: this.apikey,
+                        apikey: this.mAPIKey,
                     },
                 },
             );

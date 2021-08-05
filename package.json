@@ -1,7 +1,12 @@
 {
   "name": "contract-yoink",
   "description": "A simple command line tool for pulling contracts from Etherscan",
-  "keywords": ["solidity", "ethereum", "vyper", "etherscan"]
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "vyper",
+    "etherscan"
+  ],
   "main": "Dist/Src/App.js",
   "version": "0.1.1",
   "repository": {
