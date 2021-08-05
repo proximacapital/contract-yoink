@@ -1,0 +1,8 @@
+# Proxima Dependabot Config with support for private packages
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"

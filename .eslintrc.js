@@ -182,7 +182,7 @@ module.exports = {
         "no-console": "error",                                                                              // Disallow calls to console.log
         "no-duplicate-imports": "error",                                                                    // Imports from the same file must be merged
         "no-irregular-whitespace": "error",                                                                 // Disallow weird whitespace characters
-        "no-magic-numbers": "off",  // TODO: Turn on                                                        // Disallow number literals
+        "no-magic-numbers": "error",                                                                        // Disallow number literals
         "no-multiple-empty-lines": "error",                                                                 // Allow at most one empty line between code
         "no-trailing-spaces": "error",                                                                      // Strip whitespace after line ends
         "object-curly-spacing": ["error", "always"], // TODO: Test { a:0 }                                  // Requires spaces like: { a: 0 }
@@ -203,6 +203,16 @@ module.exports = {
                 "items": 6,
                 "max-len": 120,
                 "semi": false,
+            }
+        ],
+        "unicorn/expiring-todo-comments": [
+            "error",
+            {
+                "allowWarningComments": false,
+                "ignore": [
+                    "#\\d+",
+                    "20[0-4]\\d(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)",
+                ],
             }
         ],
         "indent": [
