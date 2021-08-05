@@ -33,7 +33,7 @@ jobs:
       run: gulp build
     - name: Test
       run: gulp coverage
-    - name: CodeClimate Upload
-      uses: paambaati/codeclimate-action@v2.7.4
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
+    # - name: CodeClimate Upload
+    #   uses: paambaati/codeclimate-action@v2.7.4
+    #   env:
+    #     CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
