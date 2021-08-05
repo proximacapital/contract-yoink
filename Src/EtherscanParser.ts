@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import axios from "axios";
 
 const networks = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli"]; // eslint-disable-line

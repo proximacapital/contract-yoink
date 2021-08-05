@@ -1,5 +1,7 @@
 {
   "name": "contract-yoink",
+  "description": "A simple command line tool for pulling contracts from Etherscan",
+  "main": "Dist/Src/App.js",
   "version": "0.1.0",
   "repository": {
     "type": "git",
@@ -11,6 +13,9 @@
     "npm": ">= 7.13.0"
   },
   "scripts": {},
+  "bin": {
+    "yoink": "./Dist/Src/App.js"
+  },
   "dependencies": {
     "axios": "0.21.1",
     "lodash": "4.17.20"
