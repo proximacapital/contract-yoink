@@ -48,19 +48,9 @@ async function YoinkAndWrite(aNetwork: TNetwork | undefined, aAddress: string): 
 async function main(): Promise<void>
 {
     program.parse();
-    // if (lConsoleArgs.length <= 1)
-    // {
-    //     let lValidNetworks: string = "";
-    //     NETWORKS.forEach((aNetwork: TNetwork): void => { lValidNetworks += `${aNetwork} | `; });
-    //
-    //     console.error("Expected network followed by 1 or more contract addresses");
-    //     console.error("Valid network options are: " + lValidNetworks);
-    //
-    //     return;
-    // }
 
     const lAddresses: string[] = program.args;
-    const lNetwork: string | undefined = program.opts().network;
+    const lNetwork: string | undefined = program.opts().network?.toLowerCase();
 
     if (lNetwork !== undefined && !IsValidNetwork(lNetwork))
     {
