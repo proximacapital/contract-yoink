@@ -3,7 +3,7 @@
 import PackageJSON from "@Root/package.json";
 import { program } from "commander";
 import fs from "fs";
-import { EtherscanParser, TEtherscanCodeResult, TNetwork } from "./EtherscanParser";
+import { EtherscanParser, NETWORKS, TEtherscanCodeResult, TNetwork } from "./EtherscanParser";
 
 
 // Cofigure commander
@@ -18,6 +18,23 @@ function LogSuccess(aFileName: string): void
     console.log("Successfully wrote", aFileName);
 }
 
+function IsValidNetwork(aInput: string | undefined): aInput is TNetwork
+{
+    switch (aInput)
+    {
+        case "mainnet":
+        case "ropsten":
+        case "kovan":
+        case "rinkeby":
+        case "goerli":
+        case "bsc":
+        case "bsc-testnet":
+            return true;
+        default:
+            return false;
+    }
+}
+
 async function YoinkAndWrite(aNetwork: TNetwork | undefined, aAddress: string): Promise<void>
 {
     const lParser: EtherscanParser = new EtherscanParser(aNetwork);
@@ -27,7 +44,6 @@ async function YoinkAndWrite(aNetwork: TNetwork | undefined, aAddress: string): 
 
     fs.writeFile(lFileName, lResult.code, (): void => LogSuccess(lFileName));
 }
-
 
 async function main(): Promise<void>
 {
@@ -44,7 +60,18 @@ async function main(): Promise<void>
     // }
 
     const lAddresses: string[] = program.args;
-    const lNetwork: TNetwork | undefined = program.opts().network;
+    const lNetwork: string | undefined = program.opts().network;
+
+    if (lNetwork !== undefined && !IsValidNetwork(lNetwork))
+    {
+        let lValidNetworks: string = "";
+        NETWORKS.forEach((aNetwork: TNetwork): void => { lValidNetworks += `${aNetwork} | `; });
+
+        console.error("Expected network followed by 1 or more contract addresses");
+        console.error("Valid network options are: " + lValidNetworks);
+        return;
+    }
+
     lAddresses.forEach((aAddress: string): Promise<void> => YoinkAndWrite(lNetwork, aAddress));
 }
 
