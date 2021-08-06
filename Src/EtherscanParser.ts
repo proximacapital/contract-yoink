@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const NETWORKS = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli", "bsc"]; // eslint-disable-line
+export const NETWORKS = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli", "bsc", "bsc-testnet"]; // eslint-disable-line
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
 export type TNetwork = typeof NETWORKS[number];
@@ -21,17 +21,19 @@ export class EtherscanParser
             );
         }
 
-        if (aNetwork === "mainnet")
+        switch (aNetwork)
         {
-            this.mURL = "https://api.etherscan.io/api";
-        }
-        else if (aNetwork === "bsc")
-        {
-            this.mURL = "https://api.bscscan.com/api"
-        }
-        else
-        {
-            this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
+            case "mainnet":
+                this.mURL = "https://api.etherscan.io/api";
+                break;
+            case "bsc":
+                this.mURL = "https://api.bscscan.com/api";
+                break;
+            case "bsc-testnet":
+                this.mURL = "https://api-testnet.bscscan.com/api";
+                break;
+            default:
+                this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
 
         this.mAPIKey = aNetwork === "bsc"
