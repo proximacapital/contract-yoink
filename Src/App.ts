@@ -20,21 +20,7 @@ function LogSuccess(aFileName: string): void
 
 function IsValidNetwork(aInput: string | undefined): aInput is TNetwork
 {
-    switch (aInput)
-    {
-        case "mainnet":
-        case "ropsten":
-        case "kovan":
-        case "rinkeby":
-        case "goerli":
-        case "bsc":
-        case "bsc-testnet":
-        case "polygon":
-        case "matic":
-            return true;
-        default:
-            return false;
-    }
+    return NETWORKS.includes((aInput?.toLowerCase() ?? "") as TNetwork);
 }
 
 async function YoinkAndWrite(aNetwork: TNetwork | undefined, aAddress: string): Promise<void>

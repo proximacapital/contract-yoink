@@ -11,6 +11,7 @@ export const NETWORKS = <const>[
     "bsc-testnet",
     "polygon",
     "matic",
+    "heco",
 ];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
@@ -47,6 +48,9 @@ export class EtherscanParser
             case "matic":
                 this.mURL = "https://api.polygonscan.com/api";
                 break;
+            case "heco":
+                this.mURL = "https://api.hecoinfo.com/api";
+                break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
@@ -59,6 +63,9 @@ export class EtherscanParser
             case "matic":
             case "polygon":
                 this.mAPIKey = "J5EJ4G11M8H8XEVUS8PACSMQDWKQYVAUFS"; // Personal key, don't spam it thanks
+                break;
+            case "heco":
+                this.mAPIKey = "AT321ASMP482R95ISBTNEGPSBMV52F4GX9"; // Personal key, don't spam it thanks
                 break;
             default:
                 this.mAPIKey = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate;
