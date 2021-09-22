@@ -1,6 +1,17 @@
 import axios from "axios";
 
-export const NETWORKS = <const>["mainnet", "ropsten", "kovan", "rinkeby", "goerli", "bsc", "bsc-testnet"]; // eslint-disable-line
+// eslint-disable-next-line
+export const NETWORKS = <const>[
+    "mainnet",
+    "ropsten",
+    "kovan",
+    "rinkeby",
+    "goerli",
+    "bsc",
+    "bsc-testnet",
+    "polygon",
+    "matic",
+];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
 export type TNetwork = typeof NETWORKS[number];
@@ -32,13 +43,26 @@ export class EtherscanParser
             case "bsc-testnet":
                 this.mURL = "https://api-testnet.bscscan.com/api";
                 break;
+            case "polygon":
+            case "matic":
+                this.mURL = "https://api.polygonscan.com/api";
+                break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
 
-        this.mAPIKey = aNetwork === "bsc"
-            ? "VDAE16Y6TB5FJHIIP9BJBC8C2ZG1Y6CKA2"  // Personal key, don't spam it thanks
-            : "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate
+        switch (aNetwork)
+        {
+            case "bsc":
+                this.mAPIKey = "VDAE16Y6TB5FJHIIP9BJBC8C2ZG1Y6CKA2"; // Personal key, don't spam it thanks
+                break;
+            case "matic":
+            case "polygon":
+                this.mAPIKey = "J5EJ4G11M8H8XEVUS8PACSMQDWKQYVAUFS"; // Personal key, don't spam it thanks
+                break;
+            default:
+                this.mAPIKey = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate;
+        }
     }
 
     /**

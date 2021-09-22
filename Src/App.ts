@@ -29,6 +29,8 @@ function IsValidNetwork(aInput: string | undefined): aInput is TNetwork
         case "goerli":
         case "bsc":
         case "bsc-testnet":
+        case "polygon":
+        case "matic":
             return true;
         default:
             return false;
