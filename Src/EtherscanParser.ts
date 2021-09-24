@@ -13,6 +13,7 @@ export const NETWORKS = <const>[
     "matic",
     "heco",
     "arbitrum",
+    "ftm"
 ];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
@@ -55,6 +56,9 @@ export class EtherscanParser
             case "arbitrum":
                 this.mURL = "https://api.arbiscan.io/api";
                 break;
+            case "ftm":
+                this.mURL = "https://api.ftmscan.com/api"
+                break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
@@ -71,6 +75,8 @@ export class EtherscanParser
             case "heco":
                 this.mAPIKey = "AT321ASMP482R95ISBTNEGPSBMV52F4GX9"; // Personal key, don't spam it thanks
                 break;
+            case "ftm":
+                this.mAPIKey = "DZUXE68W59RV35RKYRZ4K2T8B5DSZRM7Y1"; // Thomas' private key
             default:
                 this.mAPIKey = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate;
         }
