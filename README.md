@@ -24,6 +24,10 @@ yoink 0x55d398326f99059ff775485246999027b3197955 --network bsc
    - `goerli`
    - `bsc`
    - `bsc-testnet`
+   - `polygon` or `matic`
+   - `heco`
+   - `arbitrum`
+   - `ftm`
 
 ### Credit
  - EtherscanParser was yoinked from [Naddison36](https://github.com/naddison36/sol2uml)
