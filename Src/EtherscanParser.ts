@@ -13,7 +13,7 @@ export const NETWORKS = <const>[
     "matic",
     "heco",
     "arbitrum",
-    "ftm"
+    "ftm",
 ];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
@@ -57,7 +57,7 @@ export class EtherscanParser
                 this.mURL = "https://api.arbiscan.io/api";
                 break;
             case "ftm":
-                this.mURL = "https://api.ftmscan.com/api"
+                this.mURL = "https://api.ftmscan.com/api";
                 break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
