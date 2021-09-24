@@ -175,18 +175,18 @@ export class EtherscanParser
         }
         catch (err)
         {
-            if (err.message !== undefined)
+            if ((err as any).message !== undefined)
             {
                 throw err;
             }
-            if (err.response === undefined)
+            if ((err as any).response === undefined)
             {
                 throw new Error(`Failed to ${lDescription}. No HTTP response.`);
             }
 
             throw new Error(
                 // eslint-disable-next-line max-len
-                `Failed to ${lDescription}. HTTP status code ${err.response?.status}, status text: ${err.response?.statusText}`,
+                `Failed to ${lDescription}. HTTP status code ${(err as any).response?.status}, status text: ${(err as any).response?.statusText}`,
             );
         }
     }
