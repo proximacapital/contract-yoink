@@ -13,6 +13,7 @@ export const NETWORKS = <const>[
     "matic",
     "heco",
     "arbitrum",
+    "moonriver",
 ];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
@@ -55,6 +56,9 @@ export class EtherscanParser
             case "arbitrum":
                 this.mURL = "https://api.arbiscan.io/api";
                 break;
+            case "moonriver":
+                this.mURL = "https://api.arbiscan.io/api";
+                break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
@@ -70,6 +74,9 @@ export class EtherscanParser
                 break;
             case "heco":
                 this.mAPIKey = "AT321ASMP482R95ISBTNEGPSBMV52F4GX9"; // Personal key, don't spam it thanks
+                break;
+            case "moonriver":
+                this.mAPIKey = "V7F4BI8A2ZF3F6ISAZCHWVA8F9A7468AGB"; // Personal key, don't spam it thanks
                 break;
             default:
                 this.mAPIKey = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate;
