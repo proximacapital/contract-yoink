@@ -1,4 +1,3 @@
-/* eslint-disable */
 const fs    = require("fs");
 const path  = require("path");
 const _     = require("lodash");
@@ -55,6 +54,7 @@ gulp.task("build", gulp.series(
 // ---------------------------------------------------------------------------------------------------------------------
 gulp.task("lint-check", done => execTask(`${_ESLINT_} . --ext .ts`, done));
 gulp.task("lint-fix", done => execTask(`${_ESLINT_} . --ext .ts --fix`, done));
+gulp.task("lint", gulp.task("lint-check"));
 
 // ---------------------------------------------------------------------------------------------------------------------
 function getArgs()
@@ -95,21 +95,54 @@ function getArgs()
 // ---------------------------------------------------------------------------------------------------------------------
 gulp.task("test", done =>
 {
-    const pathArgs = getArgs()["path"];
+    const lPathArgs = getArgs()["path"];
+    const lFileArgs = getArgs()["file"];
 
-    if (pathArgs === undefined)
+    if (lPathArgs !== undefined)
     {
-        execTask(getAvaCommand(TestFolder) + getAvaArgs("match") + getAvaArgs("serial"), done);
-    }
-    else
-    {
-        const allDone = _.after(pathArgs.length, done);
-
-        pathArgs.forEach((aPath) =>
+        const allDone = _.after(lPathArgs.length, done);
+        lPathArgs.forEach((aPath) =>
         {
             execTask(getAvaCommand(TestFolder + "/" + aPath) + getAvaArgs("match") + getAvaArgs("serial"), allDone);
         });
     }
+    else if (lFileArgs !== undefined)
+    {
+        const lMatchingFiles = getMatchingFiles(lFileArgs, "test");
+        if (lMatchingFiles.length === 0)
+        {
+            done("Could not find any matching test.js files");
+            return;
+        }
+
+        execTask(_AVA_ +  " " + lMatchingFiles.join(" "), done);
+    }
+    else
+    {
+        execTask(getAvaCommand(TestFolder) + getAvaArgs("match") + getAvaArgs("serial"), done);
+    }
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+gulp.task("demo", done =>
+{
+    // get file name args
+    const lFileArgs = getArgs()["file"];
+    if (!lFileArgs || lFileArgs.length <= 0) {
+        done("ERROR: Must supply file name list via `--file fileName`");
+        return;
+    }
+
+    // filter demos to those matching file input
+    const lMatchingFiles = getMatchingFiles(lFileArgs, "demo");
+    if (lMatchingFiles.length === 0)
+    {
+        done("Could not find any matching demo.js files");
+        return;
+    }
+
+    // run demos
+    execTask(_AVA_ +  " --fail-fast " + lMatchingFiles.join(" "), done);
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -133,6 +166,7 @@ gulp.task("build-check-test", gulp.series(
     "lint-check",
     "tests-all",
 ));
+gulp.task("build-lint-test", gulp.task("build-check-test"));
 
 // Helper functions:
 function execTask(command, done)
@@ -144,6 +178,19 @@ function execTask(command, done)
             done(error);
         }
     ).stdout.pipe(process.stdout);
+}
+
+function getMatchingFiles(aFileArgs, aFileType)
+{
+    // filter files to those matching requested arguments
+    const lRegex = new RegExp(`^.*(${aFileArgs.join('|')})\\.${aFileType}\\.js$`);
+    const lMatchingFiles = [];
+    getAllTestFiles(TestFolder, `.${aFileType}.js`).forEach(aFile =>
+    {
+        if (lRegex.test(aFile)) { lMatchingFiles.push(aFile); }
+    });
+
+    return lMatchingFiles;
 }
 
 function getAllTestFiles(aDirectory)
@@ -180,9 +227,9 @@ function getAvaCommand(aDirectory)
 function getAvaArgs(aOption)
 {
     const optionArgs = getArgs()[aOption];
-    
+
     let args = "";
-    
+
     if ( optionArgs !== undefined)
     {
         if ( optionArgs.length === 0 )

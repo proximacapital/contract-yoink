@@ -13,6 +13,7 @@ export const NETWORKS = <const>[
     "matic",
     "heco",
     "arbitrum",
+    "ftm",
     "moonriver",
 ];
 
@@ -56,8 +57,11 @@ export class EtherscanParser
             case "arbitrum":
                 this.mURL = "https://api.arbiscan.io/api";
                 break;
+            case "ftm":
+                this.mURL = "https://api.ftmscan.com/api";
+                break;
             case "moonriver":
-                this.mURL = "https://api.arbiscan.io/api";
+                this.mURL = "https://api-moonriver.moonscan.io/api";
                 break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
@@ -74,6 +78,9 @@ export class EtherscanParser
                 break;
             case "heco":
                 this.mAPIKey = "AT321ASMP482R95ISBTNEGPSBMV52F4GX9"; // Personal key, don't spam it thanks
+                break;
+            case "ftm":
+                this.mAPIKey = "DZUXE68W59RV35RKYRZ4K2T8B5DSZRM7Y1"; // Personal key, don't spam it thanks
                 break;
             case "moonriver":
                 this.mAPIKey = "V7F4BI8A2ZF3F6ISAZCHWVA8F9A7468AGB"; // Personal key, don't spam it thanks
@@ -175,18 +182,18 @@ export class EtherscanParser
         }
         catch (err)
         {
-            if (err.message !== undefined)
+            if ((err as any).message !== undefined)
             {
                 throw err;
             }
-            if (err.response === undefined)
+            if ((err as any).response === undefined)
             {
                 throw new Error(`Failed to ${lDescription}. No HTTP response.`);
             }
 
             throw new Error(
                 // eslint-disable-next-line max-len
-                `Failed to ${lDescription}. HTTP status code ${err.response?.status}, status text: ${err.response?.statusText}`,
+                `Failed to ${lDescription}. HTTP status code ${(err as any).response?.status}, status text: ${(err as any).response?.statusText}`,
             );
         }
     }

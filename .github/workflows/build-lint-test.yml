@@ -1,0 +1,44 @@
+name: build-lint-test.yaml
+
+on:
+  push:
+    branches:
+      - master
+      - prod
+      - stage
+      - dev
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@afe4af09a72596f47d806ee5f8b2674ec07fdc73
+      with: 
+          fetch-depth: 0
+    - name: Load .nvmrc
+      run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+      id: nvm
+
+    - name: Setup Node '${{ steps.nvm.outputs.NVMRC }}'
+      uses: actions/setup-node@041bafb67276a76a9cc88cd8a4e99165e9eb287d
+      with:
+        node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Lint check
+      run: gulp lint-check
+
+    - name: Build
+      run: gulp build
+
+    - name: Test
+      run: gulp coverage
+
+    # - name: CodeClimate Upload
+    #   uses: paambaati/codeclimate-action@7bcf9e73c0ee77d178e72c0ec69f1a99c1afc1f3
+    #   env:
+    #     CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
