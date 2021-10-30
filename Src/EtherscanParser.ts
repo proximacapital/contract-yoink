@@ -14,6 +14,7 @@ export const NETWORKS = <const>[
     "heco",
     "arbitrum",
     "ftm",
+    "moonriver",
 ];
 
 type TParsedEtherscanSource = [ filename: string, code: { content: string } ];
@@ -59,6 +60,9 @@ export class EtherscanParser
             case "ftm":
                 this.mURL = "https://api.ftmscan.com/api";
                 break;
+            case "moonriver":
+                this.mURL = "https://api-moonriver.moonscan.io/api";
+                break;
             default:
                 this.mURL = `https://api-${aNetwork}.etherscan.io/api`;
         }
@@ -76,7 +80,10 @@ export class EtherscanParser
                 this.mAPIKey = "AT321ASMP482R95ISBTNEGPSBMV52F4GX9"; // Personal key, don't spam it thanks
                 break;
             case "ftm":
-                this.mAPIKey = "DZUXE68W59RV35RKYRZ4K2T8B5DSZRM7Y1"; // Thomas' private key
+                this.mAPIKey = "DZUXE68W59RV35RKYRZ4K2T8B5DSZRM7Y1"; // Personal key, don't spam it thanks
+                break;
+            case "moonriver":
+                this.mAPIKey = "V7F4BI8A2ZF3F6ISAZCHWVA8F9A7468AGB"; // Personal key, don't spam it thanks
                 break;
             default:
                 this.mAPIKey = "ZAD4UI2RCXCQTP38EXS3UY2MPHFU5H9KB1"; // Sorry nick, still stinging off your key mate;
